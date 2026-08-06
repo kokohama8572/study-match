@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/study_match_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: rlfjrl10
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  jwt:
+    # 비밀키는 256비트(32글자) 이상이어야 합니다. 실무에서는 복잡한 난수를 사용합니다.
+    secret: this-is-my-super-secret-key-for-study-match-platform-backend
