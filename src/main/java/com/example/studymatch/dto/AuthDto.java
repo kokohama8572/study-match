@@ -15,7 +15,7 @@ public class AuthDto {
     //LoginRequest (로그인 요청): 사용자가 로그인을 시도할 때 입력한 email과 password를 서버로 전달합니다.
     @Getter
     public static class LoginRequest{
-        private String username;
+        private String email;
         private String password;
     }
     //서버 ➔ 클라이언트 (Response)

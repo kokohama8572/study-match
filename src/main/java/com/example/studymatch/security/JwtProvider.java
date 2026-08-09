@@ -1,4 +1,4 @@
-package com.example.studymatch.entity;
+package com.example.studymatch.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -29,5 +29,25 @@ public class JwtProvider {
                 .expiration(new Date(System.currentTimeMillis() + expirationTime)) // 만료 시간
                 .signWith(secretKey) // 서버의 비밀키로 서명 (위조 방지)
                 .compact();
+    }
+
+    // 1. 토큰이 위조되지 않았고, 만료되지 않았는지 검증하는 메서드
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
+            return true;
+        } catch (Exception e) {
+            // 토큰이 조작되었거나 시간이 만료되면 에러가 발생하여 false를 반환합니다.
+            return false;
+        }
+    }
+
+    // 2. 유효한 토큰 안에서 사용자의 이메일과 권한(Role) 정보를 꺼내는 메서드
+    public io.jsonwebtoken.Claims getClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 }

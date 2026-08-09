@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 //회원가입하고 로그인 정보를 담는 엔티티임
 @Entity
-@Table(name = "students")
+@Table(name = "users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
