@@ -20,28 +20,28 @@ public class Recruit {
     private String content; // 모집글 내용
 
     @Column(nullable = false)
-    private boolean isClosed; // 모집 마감 여부 (false: 모집중, true: 마감)
+    private boolean isClosed; // 모집 마감
 
-    // 여러 개의 게시글(Many)은 하나의 작성자(One)를 가집니다.
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user; // 작성자 정보
+    private User user;
 
     @Builder
     public Recruit(String title, String content, User user) {
         this.title = title;
         this.content = content;
-        this.isClosed = false; // 게시글을 처음 작성하면 기본으로 '모집 중' 상태
+        this.isClosed = false; // 기본으로모집 중 상태
         this.user = user;
     }
 
-    // 💡 누락되었던 게시글 수정용 메서드입니다.
+    //수정용 메서드
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
     }
 
-    // 모집 마감 처리를 위한 메서드
+    // 모집 마감 처리
     public void close() {
         this.isClosed = true;
     }

@@ -22,6 +22,6 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthDto.TokenResponse> login(@RequestBody AuthDto.LoginRequest request) {
         String token = authService.login(request);
-        return ResponseEntity.ok(new AuthDto.TokenResponse(token)); // 발급된 토큰을 JSON 형태로 반환
+        return ResponseEntity.ok(new AuthDto.TokenResponse(token));
     }
 }

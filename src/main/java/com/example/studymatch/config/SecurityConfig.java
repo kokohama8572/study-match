@@ -31,15 +31,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                // 2. URL별 접근 권한을 설정합니다.
-// 2. URL별 접근 권한을 설정합니다.
                 .authorizeHttpRequests(auth -> auth
                         // ⭐️ 아래 줄에 "/error" 가 확실하게 추가되어 있어야 합니다!
                         .requestMatchers("/api/auth/**", "/error").permitAll()
                         .anyRequest().authenticated()
                 )
 
-                // 3. 방금 만든 JwtAuthenticationFilter를 기존 아이디/비밀번호 필터 앞에 끼워 넣습니다.
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

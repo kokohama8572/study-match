@@ -19,23 +19,20 @@ public class RecruitService {
     private final RecruitRepository recruitRepository;
     private final UserRepository userRepository;
 
-    // 1. 게시글 작성 (Create)
     @Transactional
     public Long createRecruit(RecruitDto.Request request, String email) {
-        // JWT 토큰에서 꺼낸 이메일로 DB에서 작성자 정보를 찾습니다.
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         Recruit recruit = Recruit.builder()
                 .title(request.getTitle())
                 .content(request.getContent())
-                .user(user) // 찾은 유저를 작성자로 지정
+                .user(user)
                 .build();
 
         return recruitRepository.save(recruit).getId();
     }
 
-    // 2. 게시글 전체 조회 (Read)
     @Transactional(readOnly = true)
     public List<RecruitDto.Response> getAllRecruits() {
         return recruitRepository.findAll().stream()
@@ -49,7 +46,6 @@ public class RecruitService {
                 .collect(Collectors.toList());
     }
 
-    // 3. 게시글 수정 (Update)
     @Transactional
     public void updateRecruit(Long id, RecruitDto.Request request, String email) {
         Recruit recruit = recruitRepository.findById(id)
@@ -63,7 +59,6 @@ public class RecruitService {
         recruit.update(request.getTitle(), request.getContent());
     }
 
-    // 4. 게시글 삭제 (Delete)
     @Transactional
     public void deleteRecruit(Long id, String email) {
         Recruit recruit = recruitRepository.findById(id)
