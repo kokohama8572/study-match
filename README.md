@@ -1,7 +1,6 @@
 ## 1. 프로젝트 개요
 
 - **프로젝트명:** Study Match (스터디/프로젝트 팀원 매칭 플랫폼 백엔드)
-- **GitHub 주소:** https://github.com/kokohama8572/study-match.git
 - **프로젝트 설명:**
     
     공부나 프로젝트를 함께할 팀원을 구할 수 있는 프로그램입니다. Spring Security와 JWT를 도입해 안전한 회원 인증을 도입하고 JPA를 이용해 사용자와 계시글의 관계를 1대 다수로 설계했습니다.
