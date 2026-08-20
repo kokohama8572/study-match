@@ -1,6 +1,7 @@
 package com.example.studymatch.service;
 
-import com.example.studymatch.dto.AuthDto;
+import com.example.studymatch.dto.request.LoginRequest;
+import com.example.studymatch.dto.request.SignupRequest;
 import com.example.studymatch.entity.Role;
 import com.example.studymatch.entity.User;
 import com.example.studymatch.repository.UserRepository;
@@ -17,24 +18,24 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
-    public void signup(AuthDto.SignupRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
+    public void signup(SignupRequest request) {
+        if (userRepository.existsByEmail(request.email())) {
             throw new IllegalArgumentException("이미 가입된 이메일입니다.");
         }
 
         User user = User.builder()
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
+                .email(request.email())
+                .password(passwordEncoder.encode(request.password()))
                 .role(Role.ROLE_USER)
                 .build();
 
         userRepository.save(user);
     }
-    public String login(AuthDto.LoginRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
+    public String login(LoginRequest request) {
+        User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
 

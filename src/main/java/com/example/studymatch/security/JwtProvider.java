@@ -13,10 +13,12 @@ import java.util.Date;
 public class JwtProvider {
 
     private final SecretKey secretKey;
-    private final long expirationTime = 1000 * 60 * 60;
+    private final long expirationTime;
 
-    public JwtProvider(@Value("${jwt.secret}") String secret) {
+    public JwtProvider(@Value("${jwt.secret}") String secret ,
+                       @Value("${jwt.expiration}") long expirationTime) {
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        this.expirationTime = expirationTime;
     }
 
     public String createToken(String email, String role) {

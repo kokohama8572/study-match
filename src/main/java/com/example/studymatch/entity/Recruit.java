@@ -22,7 +22,6 @@ public class Recruit {
     @Column(nullable = false)
     private boolean isClosed; // 모집 마감
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
